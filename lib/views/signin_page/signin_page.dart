@@ -6,6 +6,7 @@ import 'package:ankama_launcher/views/signin_page/widgets/password_text_field.da
 import 'package:ankama_launcher/views/widgets/title_bar.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const kMenuBackgroundWidth = 500.0;
 const kMenuPadding = 50.0;
@@ -59,17 +60,17 @@ class SignInPage extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Connexion'.toUpperCase(),
+                          AppLocalizations.of(context)!.connection.toUpperCase(),
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: 'Identifiant',
-                          suffixIcon: Icon(
+                          hintText: AppLocalizations.of(context)!.identifier,
+                          suffixIcon: const Icon(
                             Icons.help_outline_rounded,
                           ),
                         ),
@@ -90,12 +91,12 @@ class SignInPage extends StatelessWidget {
                       child: Row(
                         children: [
                           LabeledCheckbox(
-                            label: 'Se souvenir de moi',
+                            label: AppLocalizations.of(context)!.rememberMe,
                             onChecked: () {},
                             onUnchecked: () {},
                           ),
                           LabeledCheckbox(
-                            label: 'Rester connecté',
+                            label: AppLocalizations.of(context)!.stayLoggedIn,
                             onChecked: () {},
                             onUnchecked: () {},
                           ),
@@ -106,7 +107,7 @@ class SignInPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: ElevatedButton(
                         onPressed: () {},
-                        child: Text('Se connecter'.toUpperCase()),
+                        child: Text(AppLocalizations.of(context)!.signIn.toUpperCase()),
                       ),
                     ),
                     Padding(
@@ -121,7 +122,7 @@ class SignInPage extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                          Text('Ou'.toUpperCase()),
+                          Text(AppLocalizations.of(context)!.or.toUpperCase()),
                           const Expanded(
                             child: Divider(
                               thickness: 2.0,
@@ -148,12 +149,12 @@ class SignInPage extends StatelessWidget {
                             TextButton.icon(
                               onPressed: () {},
                               icon: const Icon(CommunityMaterialIcons.arrow_right_circle_outline),
-                              label: const Text('Impossible de se connecter ?'),
+                              label: Text(AppLocalizations.of(context)!.signInConnectionProblem),
                             ),
                             TextButton.icon(
                               onPressed: () {},
                               icon: const Icon(CommunityMaterialIcons.arrow_right_circle_outline),
-                              label: const Text('Créer un compte Ankama'),
+                              label: Text(AppLocalizations.of(context)!.signIncreateAnkamaAccount),
                             ),
                           ],
                         ),

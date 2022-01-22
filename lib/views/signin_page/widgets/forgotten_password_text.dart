@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgottenPasswordText extends StatefulWidget {
   const ForgottenPasswordText({
@@ -21,7 +22,7 @@ class _ForgottenPasswordTextState extends State<ForgottenPasswordText> {
       onPressed: widget.onPressed,
       onHover: (value) => setState(() => hovering = value),
       child: Text(
-        'Mot de passe oublié ?',
+        AppLocalizations.of(context)!.signInForgottenPassword,
         style: TextStyle(decoration: hovering ? TextDecoration.underline : null),
       ),
     );

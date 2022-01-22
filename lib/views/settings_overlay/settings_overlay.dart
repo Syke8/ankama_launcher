@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:ankama_launcher/views/settings_overlay/widgets/close_settings_button.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsOverlay extends StatefulWidget {
   const SettingsOverlay({
@@ -108,12 +109,12 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                         CommunityMaterialIcons.tune_variant,
                       ),
                       title: Text(
-                        'Paramètres'.toUpperCase(),
+                        AppLocalizations.of(context)!.settings.toUpperCase(),
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                     _SettingsMenuListTile(
-                      label: 'Général',
+                      label: AppLocalizations.of(context)!.settingsGeneral,
                       selected: actualView == _SettingsView.general,
                       onTap: () {
                         if (actualView != _SettingsView.general) {
@@ -122,7 +123,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                       },
                     ),
                     _SettingsMenuListTile(
-                      label: 'Performances',
+                      label: AppLocalizations.of(context)!.settingsPerformance,
                       selected: actualView == _SettingsView.performance,
                       onTap: () {
                         if (actualView != _SettingsView.performance) {
@@ -131,19 +132,19 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                       },
                     ),
                     _SettingsMenuListTile(
-                      label: 'Chat',
+                      label: AppLocalizations.of(context)!.settingsChat,
                       onTap: () {},
                     ),
                     _SettingsMenuListTile(
-                      label: 'Vidéo / stream',
+                      label: AppLocalizations.of(context)!.settingsVideoStream,
                       onTap: () {},
                     ),
                     _SettingsMenuListTile(
-                      label: 'Légal',
+                      label: AppLocalizations.of(context)!.settingsLegal,
                       onTap: () {},
                     ),
                     _SettingsMenuListTile(
-                      label: 'Assistance',
+                      label: AppLocalizations.of(context)!.settingsHelp,
                       onTap: () {},
                     ),
                   ],

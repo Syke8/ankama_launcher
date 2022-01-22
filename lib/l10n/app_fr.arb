@@ -1,0 +1,22 @@
+{
+    "connection": "Connexion",
+    "identifier": "Identifiant",
+    "rememberMe": "Se souvenir de moi",
+    "stayLoggedIn": "Rester connecté",
+    "signIn": "Se connecter",
+    "or": "Ou",
+    "password": "Mot de passe",
+
+    "signInFacebook": "Se connecter avec Facebook",
+    "signInForgottenPassword": "Mot de passe oublié ?",
+    "signInConnectionProblem": "Impossible de se connecter ?",
+    "signIncreateAnkamaAccount": "Créer un compte Ankama",
+
+    "settings": "Paramètres",
+    "settingsGeneral": "Général",
+    "settingsPerformance": "Performances",
+    "settingsChat": "Chat",
+    "settingsVideoStream": "Vidéo / Stream",
+    "settingsLegal": "Légal",
+    "settingsHelp": "Assistance"
+}
