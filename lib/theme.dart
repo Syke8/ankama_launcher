@@ -51,7 +51,13 @@ class AppTheme {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            elevation: 0.0,
+            shape: const StadiumBorder(),
+            minimumSize: const Size.fromHeight(42.0),
+            textStyle: const TextStyle(fontSize: 16.0),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
             shape: const StadiumBorder(),
             minimumSize: const Size.fromHeight(42.0),
             textStyle: const TextStyle(fontSize: 16.0),

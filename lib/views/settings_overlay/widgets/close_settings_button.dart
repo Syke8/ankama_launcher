@@ -4,15 +4,16 @@ class CloseSettingsButton extends StatelessWidget {
   const CloseSettingsButton({
     Key? key,
     required this.onTap,
+    this.size = 120.0,
   }) : super(key: key);
 
   final void Function() onTap;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 120.0,
-      height: 120.0,
+    return SizedBox.square(
+      dimension: size,
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
@@ -23,10 +24,10 @@ class CloseSettingsButton extends StatelessWidget {
           onTap: onTap,
           child: CustomPaint(
             painter: _CircleBackground(Theme.of(context).colorScheme.primary),
-            child: const Center(
+            child: Center(
               child: Icon(
                 Icons.close_rounded,
-                size: 42.0,
+                size: size / 2.0,
               ),
             ),
           ),

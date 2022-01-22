@@ -1,5 +1,5 @@
 import 'package:ankama_launcher/theme.dart';
-import 'package:ankama_launcher/views/signin_page/sign_in_page.dart';
+import 'package:ankama_launcher/views/signin_page/signin_page.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
