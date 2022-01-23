@@ -20,16 +20,39 @@ class SettingsGeneralView extends StatelessWidget {
           'Português',
         ]),
       ),
-      const SwitchSettingTile(
+      DropdownSettingTile(
         title: "Taille de l'interface",
-        description: 'Change la taille de tous les composants du launcher : boutons, police...',
-        state: false,
+        description: "Change la taille de tous les composants du launcher : boutons, police...",
+        options: HashSet.from([
+          'SD (petit)',
+          'HD (classique)',
+          '4K (grand)',
+        ]),
       ),
-      ButtonSettingTile(
-        title: 'AAAAA',
-        description: 'BBBBBB',
-        onPressed: () {},
-        label: 'Actualiser le launcher',
+      DropdownSettingTile(
+        title: 'Thème',
+        description: "Permet de personnaliser l'apparence du launcher.",
+        options: HashSet.from([
+          'Thème classique',
+          'Thème sombre',
+        ]),
+      ),
+      const SwitchSettingTile(
+        title: "Exécuter au démarrage de l'ordinateur",
+        description: 'Lancer le Launcher Ankama au démarrage de cet ordinateur.',
+        state: true,
+      ),
+      const SwitchSettingTile(
+        title: 'Réduire dans la zone de notification au lieu de fermer',
+        description:
+            "Réduire le Launcher Ankama dans la zone de notification au lieu de quitter l'application.",
+        state: true,
+      ),
+      const SwitchSettingTile(
+        title: 'Réduire dans la zone de notification au lieu de minimiser',
+        description:
+            'Réduire le Launcher Ankama dans la zone de notification plutôt que dans la barre de tâches.',
+        state: false,
       ),
     ],
     growable: false,

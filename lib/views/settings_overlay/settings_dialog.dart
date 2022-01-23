@@ -1,5 +1,10 @@
 import 'package:animations/animations.dart';
+import 'package:ankama_launcher/views/settings_overlay/settings_chat_view.dart';
 import 'package:ankama_launcher/views/settings_overlay/settings_general_view.dart';
+import 'package:ankama_launcher/views/settings_overlay/settings_help_view.dart';
+import 'package:ankama_launcher/views/settings_overlay/settings_legal_view.dart';
+import 'package:ankama_launcher/views/settings_overlay/settings_performance_view.dart';
+import 'package:ankama_launcher/views/settings_overlay/settings_video_view.dart';
 import 'package:ankama_launcher/views/settings_overlay/widgets/close_settings_button.dart';
 import 'package:ankama_launcher/views/widgets/title_bar.dart';
 import 'package:community_material_icon/community_material_icon.dart';
@@ -86,10 +91,7 @@ class _SettingsMenu extends StatefulWidget {
   State<_SettingsMenu> createState() => _SettingsMenuState();
 }
 
-enum _SettingsView {
-  general,
-  performance,
-}
+enum _SettingsView { general, performance, chat, video, legal, help }
 
 class _SettingsMenuState extends State<_SettingsMenu> {
   _SettingsView actualView = _SettingsView.general;
@@ -135,19 +137,39 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                     ),
                     _SettingsMenuListTile(
                       label: AppLocalizations.of(context)!.settingsChat,
-                      onTap: () {},
+                      selected: actualView == _SettingsView.chat,
+                      onTap: () {
+                        if (actualView != _SettingsView.chat) {
+                          setState(() => actualView = _SettingsView.chat);
+                        }
+                      },
                     ),
                     _SettingsMenuListTile(
                       label: AppLocalizations.of(context)!.settingsVideoStream,
-                      onTap: () {},
+                      selected: actualView == _SettingsView.video,
+                      onTap: () {
+                        if (actualView != _SettingsView.video) {
+                          setState(() => actualView = _SettingsView.video);
+                        }
+                      },
                     ),
                     _SettingsMenuListTile(
                       label: AppLocalizations.of(context)!.settingsLegal,
-                      onTap: () {},
+                      selected: actualView == _SettingsView.legal,
+                      onTap: () {
+                        if (actualView != _SettingsView.legal) {
+                          setState(() => actualView = _SettingsView.legal);
+                        }
+                      },
                     ),
                     _SettingsMenuListTile(
                       label: AppLocalizations.of(context)!.settingsHelp,
-                      onTap: () {},
+                      selected: actualView == _SettingsView.help,
+                      onTap: () {
+                        if (actualView != _SettingsView.help) {
+                          setState(() => actualView = _SettingsView.help);
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -167,7 +189,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                       return SharedAxisTransition(
                         animation: primaryAnimation,
                         secondaryAnimation: secondaryAnimation,
-                        transitionType: SharedAxisTransitionType.scaled,
+                        transitionType: SharedAxisTransitionType.horizontal,
                         child: child,
                       );
                     },
@@ -187,7 +209,15 @@ class _SettingsMenuState extends State<_SettingsMenu> {
       case _SettingsView.general:
         return SettingsGeneralView();
       case _SettingsView.performance:
-        return const Text('Performance');
+        return const SettingsPerformanceView();
+      case _SettingsView.chat:
+        return const SettingsChatView();
+      case _SettingsView.video:
+        return const SettingsVideoView();
+      case _SettingsView.legal:
+        return const SettingsLegalView();
+      case _SettingsView.help:
+        return const SettingsHelpView();
     }
   }
 }
