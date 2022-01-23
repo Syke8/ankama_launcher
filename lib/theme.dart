@@ -68,5 +68,21 @@ class AppTheme {
             shape: const StadiumBorder(),
           ),
         ),
+        switchTheme: SwitchThemeData(
+          thumbColor: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.selected)) {
+              return scheme.primary;
+            }
+
+            return null;
+          }),
+          trackColor: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.selected)) {
+              return scheme.primary.withOpacity(0.5);
+            }
+
+            return null;
+          }),
+        ),
       );
 }

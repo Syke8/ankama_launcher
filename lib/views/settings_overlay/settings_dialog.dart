@@ -161,7 +161,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                     color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
                   ),
                   constraints: const BoxConstraints.expand(),
-                  padding: const EdgeInsets.all(32.0),
+                  padding: const EdgeInsets.all(40.0),
                   child: PageTransitionSwitcher(
                     transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
                       return SharedAxisTransition(

@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-enum SettingTileType { dropdown, checkbox, button }
+enum SettingTileType { dropdown, switchBox, button }
 
 abstract class SettingTile {
   const SettingTile({
@@ -28,15 +28,18 @@ class DropdownSettingTile extends SettingTile {
   final HashSet<String> options;
 }
 
-class CheckboxSettingTile extends SettingTile {
-  const CheckboxSettingTile({
+class SwitchSettingTile extends SettingTile {
+  const SwitchSettingTile({
     required String title,
     required String description,
+    required this.state,
   }) : super(
           title: title,
           description: description,
-          type: SettingTileType.checkbox,
+          type: SettingTileType.switchBox,
         );
+
+  final bool state;
 }
 
 class ButtonSettingTile extends SettingTile {
