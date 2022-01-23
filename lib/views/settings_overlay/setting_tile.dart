@@ -2,6 +2,7 @@ import 'dart:collection';
 
 enum SettingTileType { dropdown, switchBox, button }
 
+// TODO: implement internationalization for them
 abstract class SettingTile {
   const SettingTile({
     required this.title,

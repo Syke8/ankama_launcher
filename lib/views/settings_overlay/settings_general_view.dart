@@ -136,6 +136,7 @@ class _SwitchTrailingState extends State<_SwitchTrailing> {
   }
 }
 
+// TODO: make custom dropdown because they don't "fit" into the design
 class _DropdownTrailing extends StatefulWidget {
   const _DropdownTrailing({
     Key? key,
