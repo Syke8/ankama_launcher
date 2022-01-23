@@ -1,4 +1,4 @@
-import 'package:ankama_launcher/views/settings_overlay/settings_overlay.dart';
+import 'package:ankama_launcher/views/settings_overlay/settings_dialog.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,6 @@ class TitleBar extends StatefulWidget with PreferredSizeWidget {
 
 class _TitleBarState extends State<TitleBar> {
   Color barColor = Colors.transparent;
-  bool settingsOpened = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,36 +38,23 @@ class _TitleBarState extends State<TitleBar> {
             ),
             MouseRegion(
               onEnter: (_) {
-                if (!settingsOpened) {
-                  setState(() {
-                    barColor = widget.backgroundColor ?? Theme.of(context).colorScheme.background;
-                  });
-                }
+                setState(() {
+                  barColor = widget.backgroundColor ?? Theme.of(context).colorScheme.background;
+                });
               },
               onExit: (_) {
-                if (!settingsOpened) {
-                  setState(() {
-                    barColor = Colors.transparent;
-                  });
-                }
+                setState(() {
+                  barColor = Colors.transparent;
+                });
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  _SettingsButton(
-                    onClose: () => setState(() {
-                      barColor = Colors.transparent;
-                      settingsOpened = false;
-                    }),
-                    onOpen: () => setState(() {
-                      barColor = widget.backgroundColor ?? Theme.of(context).colorScheme.background;
-                      settingsOpened = true;
-                    }),
-                  ),
-                  const _MinimizeButton(),
-                  const _MaximizeButton(),
-                  const _CloseButton(),
+                children: const [
+                  _SettingsButton(),
+                  _MinimizeButton(),
+                  _MaximizeButton(),
+                  _CloseButton(),
                 ],
               ),
             ),
@@ -79,60 +65,78 @@ class _TitleBarState extends State<TitleBar> {
   }
 }
 
-class _SettingsButton extends StatefulWidget {
-  const _SettingsButton({
+class SettingsTitleBar extends StatelessWidget with PreferredSizeWidget {
+  const SettingsTitleBar({
     Key? key,
-    required this.onOpen,
-    required this.onClose,
+    this.backgroundColor,
   }) : super(key: key);
 
-  final void Function() onOpen;
-  final void Function() onClose;
+  final Color? backgroundColor;
 
   @override
-  State<_SettingsButton> createState() => _SettingsButtonState();
+  Widget build(BuildContext context) {
+    return Container(
+      color: backgroundColor ?? Theme.of(context).colorScheme.background,
+      height: kTitleBarHeight,
+      child: WindowTitleBarBox(
+        child: Row(
+          children: [
+            Expanded(
+              child: MoveWindow(),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                _SettingsButtonOpened(),
+                _MinimizeButton(),
+                _MaximizeButton(),
+                _CloseButton(),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kTitleBarHeight);
 }
 
-class _SettingsButtonState extends State<_SettingsButton> {
-  late OverlayEntry entry;
-  bool opened = false;
+class _SettingsButtonOpened extends StatelessWidget {
+  const _SettingsButtonOpened({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return _TitleBarButton(
-      backgroundColor: opened ? Theme.of(context).colorScheme.primary : null,
+      onTap: () {},
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      iconData: CommunityMaterialIcons.tune_variant,
+    );
+  }
+}
+
+class _SettingsButton extends StatelessWidget {
+  const _SettingsButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _TitleBarButton(
       iconData: CommunityMaterialIcons.tune_variant,
       onTap: () {
-        if (opened) {
-          return;
-        }
-
-        entry = OverlayEntry(
-          builder: (context) => Positioned(
-            top: kTitleBarHeight,
-            height: MediaQuery.of(context).size.height - kTitleBarHeight,
-            width: MediaQuery.of(context).size.width,
-            child: SettingsOverlay(
-              onClose: () {
-                entry.remove();
-
-                widget.onClose();
-
-                setState(() {
-                  opened = false;
-                });
-              },
-            ),
-          ),
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          barrierColor: Colors.transparent,
+          builder: (context) {
+            return const SettingsDialog();
+          },
         );
-
-        Overlay.of(context)!.insert(entry);
-
-        widget.onOpen();
-
-        setState(() {
-          opened = true;
-        });
       },
     );
   }

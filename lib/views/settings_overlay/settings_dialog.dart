@@ -1,25 +1,24 @@
 import 'package:animations/animations.dart';
+import 'package:ankama_launcher/views/settings_overlay/settings_general_view.dart';
 import 'package:ankama_launcher/views/settings_overlay/widgets/close_settings_button.dart';
+import 'package:ankama_launcher/views/widgets/title_bar.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SettingsOverlay extends StatefulWidget {
-  const SettingsOverlay({
+class SettingsDialog extends StatefulWidget {
+  const SettingsDialog({
     Key? key,
-    required this.onClose,
   }) : super(key: key);
 
-  final void Function() onClose;
-
   @override
-  State<SettingsOverlay> createState() => _SettingsOverlayState();
+  State<SettingsDialog> createState() => _SettingsDialogState();
 }
 
-class _SettingsOverlayState extends State<SettingsOverlay> with SingleTickerProviderStateMixin {
+class _SettingsDialogState extends State<SettingsDialog> with SingleTickerProviderStateMixin {
   late final _controller = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 200),
+    duration: const Duration(milliseconds: 350),
   )..forward();
 
   late final _animation = CurvedAnimation(
@@ -36,6 +35,7 @@ class _SettingsOverlayState extends State<SettingsOverlay> with SingleTickerProv
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const SettingsTitleBar(),
       backgroundColor: Colors.black54,
       body: Row(
         children: [
@@ -44,7 +44,7 @@ class _SettingsOverlayState extends State<SettingsOverlay> with SingleTickerProv
             opacity: _animation,
             child: SlideTransition(
               position: _animation.drive(Tween(
-                begin: const Offset(-0.5, .0),
+                begin: const Offset(-1.0, .0),
                 end: const Offset(.0, .0),
               )),
               child: RotationTransition(
@@ -54,7 +54,9 @@ class _SettingsOverlayState extends State<SettingsOverlay> with SingleTickerProv
                 )),
                 child: CloseSettingsButton(
                   onTap: () {
-                    _controller.reverse().then((_) => widget.onClose());
+                    _controller.reverse().then((_) {
+                      Navigator.of(context).pop();
+                    });
                   },
                 ),
               ),
@@ -63,7 +65,7 @@ class _SettingsOverlayState extends State<SettingsOverlay> with SingleTickerProv
           const Spacer(),
           SlideTransition(
             position: _animation.drive(Tween(
-              begin: const Offset(0.5, .0),
+              begin: const Offset(1.0, .0),
               end: const Offset(.0, .0),
             )),
             child: Container(
@@ -183,11 +185,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
   Widget _menuView(_SettingsView view) {
     switch (view) {
       case _SettingsView.general:
-        return Column(
-          children: [
-            const Text('Général'),
-          ],
-        );
+        return SettingsGeneralView();
       case _SettingsView.performance:
         return const Text('Performance');
     }
