@@ -180,7 +180,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                 data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                   ),
                   constraints: const BoxConstraints.expand(),
                   padding: const EdgeInsets.all(40.0),
@@ -243,9 +243,9 @@ class _SettingsMenuListTile extends StatelessWidget {
         label.toUpperCase(),
       ),
       selected: selected,
-      selectedTileColor: color.withOpacity(0.2),
+      selectedTileColor: color.withOpacity(0.1),
       textColor: color,
-      hoverColor: color.withOpacity(0.2),
+      hoverColor: color.withOpacity(0.1),
       onTap: onTap,
     );
   }
