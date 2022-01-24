@@ -1,10 +1,10 @@
 import 'package:animations/animations.dart';
-import 'package:ankama_launcher/views/settings_overlay/settings_chat_view.dart';
-import 'package:ankama_launcher/views/settings_overlay/settings_general_view.dart';
-import 'package:ankama_launcher/views/settings_overlay/settings_help_view.dart';
+import 'package:ankama_launcher/views/settings_overlay/chat/settings_chat_view.dart';
+import 'package:ankama_launcher/views/settings_overlay/general/settings_general_view.dart';
+import 'package:ankama_launcher/views/settings_overlay/help/settings_help_view.dart';
 import 'package:ankama_launcher/views/settings_overlay/settings_legal_view.dart';
-import 'package:ankama_launcher/views/settings_overlay/settings_performance_view.dart';
-import 'package:ankama_launcher/views/settings_overlay/settings_video_view.dart';
+import 'package:ankama_launcher/views/settings_overlay/performance/settings_performance_view.dart';
+import 'package:ankama_launcher/views/settings_overlay/video/settings_video_view.dart';
 import 'package:ankama_launcher/views/settings_overlay/widgets/close_settings_button.dart';
 import 'package:ankama_launcher/views/widgets/title_bar.dart';
 import 'package:community_material_icon/community_material_icon.dart';
@@ -209,15 +209,15 @@ class _SettingsMenuState extends State<_SettingsMenu> {
       case _SettingsView.general:
         return SettingsGeneralView();
       case _SettingsView.performance:
-        return const SettingsPerformanceView();
+        return SettingsPerformanceView();
       case _SettingsView.chat:
-        return const SettingsChatView();
+        return SettingsChatView();
       case _SettingsView.video:
-        return const SettingsVideoView();
+        return SettingsVideoView();
       case _SettingsView.legal:
         return const SettingsLegalView();
       case _SettingsView.help:
-        return const SettingsHelpView();
+        return SettingsHelpView();
     }
   }
 }

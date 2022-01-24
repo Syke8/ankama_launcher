@@ -5,6 +5,6 @@ class SettingsLegalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Legal');
+    return const Text('Legal (blablabla)');
   }
 }

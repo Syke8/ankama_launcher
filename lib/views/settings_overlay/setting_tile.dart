@@ -1,60 +1,11 @@
-import 'dart:collection';
+import 'package:flutter/material.dart';
 
-enum SettingTileType { dropdown, switchBox, button }
+const kTrailingWidth = 200.0;
 
-// TODO: implement internationalization for them
 abstract class SettingTile {
-  const SettingTile({
-    required this.title,
-    required this.description,
-    required this.type,
-  });
+  Widget buildTitle(BuildContext context);
 
-  final String title;
-  final String description;
-  final SettingTileType type;
-}
+  Widget? buildDescription(BuildContext context);
 
-class DropdownSettingTile extends SettingTile {
-  const DropdownSettingTile({
-    required String title,
-    required String description,
-    required this.options,
-  }) : super(
-          title: title,
-          description: description,
-          type: SettingTileType.dropdown,
-        );
-
-  final HashSet<String> options;
-}
-
-class SwitchSettingTile extends SettingTile {
-  const SwitchSettingTile({
-    required String title,
-    required String description,
-    required this.state,
-  }) : super(
-          title: title,
-          description: description,
-          type: SettingTileType.switchBox,
-        );
-
-  final bool state;
-}
-
-class ButtonSettingTile extends SettingTile {
-  const ButtonSettingTile({
-    required String title,
-    required String description,
-    required this.onPressed,
-    required this.label,
-  }) : super(
-          title: title,
-          description: description,
-          type: SettingTileType.button,
-        );
-
-  final void Function() onPressed;
-  final String label;
+  Widget? buildTrailing(BuildContext context);
 }
