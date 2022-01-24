@@ -2,7 +2,7 @@
 <br/>
 
 # Ankama Launcher
- Ankama launcher made with Flutter with a more "Ankama-esque" touch so it doesn't feel like a generic launcher in the menus and more like a warmer one.
+ Ankama launcher with a more personal touch so it doesn't feel like a generic launcher and more like a warmer one.
 
 <br/>
 
@@ -10,6 +10,7 @@
 * For fun
 * More Flutter skills
 * Official Ankama launcher is "laggy", isn't smooth and is resource intensive -> **I hate that**
+* I wanted to see how Flutter Desktop behaves
 
 <br/>
 
