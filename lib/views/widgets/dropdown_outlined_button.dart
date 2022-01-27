@@ -27,16 +27,27 @@ class DropdownOutlinedButton<T> extends StatefulWidget {
 }
 
 class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final LayerLink _layerLink = LayerLink();
 
-  late final _animController = AnimationController(
+  late final _menuAnimController = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 200),
+    duration: const Duration(milliseconds: 250),
   );
 
-  late final CurvedAnimation _animation = CurvedAnimation(
-    parent: _animController,
+  late final CurvedAnimation _menuAnimation = CurvedAnimation(
+    parent: _menuAnimController,
+    curve: Curves.fastOutSlowIn,
+  );
+
+  late final _valueAnimController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 150),
+    value: 1.0,
+  );
+
+  late final CurvedAnimation _valueAnimation = CurvedAnimation(
+    parent: _valueAnimController,
     curve: Curves.fastOutSlowIn,
   );
 
@@ -64,7 +75,7 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
   @override
   void dispose() {
     super.dispose();
-    _animController.dispose();
+    _menuAnimController.dispose();
   }
 
   void _openMenu() {
@@ -76,11 +87,11 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
       above: _closeOverlay,
     );
 
-    _animController.forward();
+    _menuAnimController.forward();
   }
 
   void _closeMenu() {
-    _animController.reverse().then((_) {
+    _menuAnimController.reverse().then((_) {
       _closeOverlay.remove();
       _menuEntry!.remove();
       _menuEntry = null;
@@ -100,7 +111,15 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
           }
         },
         child: widget.items.isNotEmpty
-            ? FittedBox(child: widget.items[currentIndex].child)
+            ? SlideTransition(
+                position: _valueAnimation.drive(Tween(
+                  begin: const Offset(.0, 2.0),
+                  end: const Offset(.0, .0),
+                )),
+                child: FittedBox(
+                  child: widget.items[currentIndex].child,
+                ),
+              )
             : const SizedBox(),
       ),
     );
@@ -131,7 +150,7 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
             offset: const Offset(.0, menuOffsetY),
             child: widget.items.isNotEmpty
                 ? ScaleTransition(
-                    scale: _animation,
+                    scale: _menuAnimation,
                     child: Material(
                       borderRadius: BorderRadius.circular(16.0),
                       color: widget.backgroundColor ?? Theme.of(context).colorScheme.background,
@@ -160,9 +179,12 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
                                 currentIndex = index;
                               });
 
-                              widget.onChanged(widget.items.elementAt(currentIndex).value);
-
                               _closeMenu();
+
+                              _valueAnimController.reset();
+                              _valueAnimController.forward().then((_) {
+                                widget.onChanged(widget.items.elementAt(currentIndex).value);
+                              });
                             },
                             child: SizedBox.fromSize(
                               size: const Size.fromHeight(itemHeight),
