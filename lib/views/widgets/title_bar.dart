@@ -128,6 +128,7 @@ class _SettingsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _TitleBarButton(
       iconData: CommunityMaterialIcons.tune_variant,
+      hoverColor: Theme.of(context).colorScheme.primaryContainer,
       onTap: () {
         showDialog(
           context: context,
@@ -151,6 +152,7 @@ class _MinimizeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _TitleBarButton(
       iconData: Icons.minimize_rounded,
+      hoverColor: Theme.of(context).colorScheme.secondaryContainer,
       onTap: () => appWindow.minimize(),
     );
   }
@@ -165,6 +167,7 @@ class _MaximizeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _TitleBarButton(
       iconData: CommunityMaterialIcons.square_rounded_outline,
+      hoverColor: Theme.of(context).colorScheme.secondaryContainer,
       onTap: () => appWindow.maximizeOrRestore(),
     );
   }
@@ -179,7 +182,7 @@ class _CloseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _TitleBarButton(
       iconData: Icons.close_rounded,
-      hoverColor: Theme.of(context).colorScheme.primary,
+      hoverColor: Theme.of(context).colorScheme.errorContainer,
       onTap: () => appWindow.close(),
     );
   }

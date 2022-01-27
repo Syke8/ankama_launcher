@@ -6,8 +6,10 @@ final themeProvider = Provider(((_) => AppTheme.ankama()));
 class AppTheme {
   AppTheme({
     required this.scheme,
-    this.textTheme,
-  });
+    TextTheme? textTheme,
+  }) : textTheme = textTheme ??
+            (scheme.brightness == Brightness.light ? ThemeData.light() : ThemeData.dark())
+                .textTheme;
 
   factory AppTheme.ankama() => AppTheme(
         scheme: ColorScheme.fromSeed(
