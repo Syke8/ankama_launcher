@@ -5,51 +5,36 @@ import 'package:flutter/material.dart';
 class DropdownOutlinedButton<T> extends StatefulWidget {
   const DropdownOutlinedButton({
     Key? key,
-    this.value,
     this.backgroundColor,
-    this.elevation = 2.0,
+    this.elevation = 4.0,
     this.textStyle,
-    this.alignment = Alignment.center,
+    this.maxMenuHeight,
+    required this.value,
     required this.items,
     required this.onChanged,
   }) : super(key: key);
 
-  final T? value;
   final Color? backgroundColor;
   final double elevation;
   final TextStyle? textStyle;
-  final Alignment alignment;
+  final double? maxMenuHeight;
+  final T value;
   final List<DropdownButtonItem<T>> items;
-  final void Function(T) onChanged;
+  final void Function(T value) onChanged;
 
   @override
   State<DropdownOutlinedButton> createState() => _DropdownOutlinedButtonState<T>();
 }
 
-class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
+class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>>
     with TickerProviderStateMixin {
   final LayerLink _layerLink = LayerLink();
 
-  late final _menuAnimController = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 250),
-  );
+  AnimationController? _menuAnimController;
+  CurvedAnimation? _menuAnimation;
 
-  late final CurvedAnimation _menuAnimation = CurvedAnimation(
-    parent: _menuAnimController,
-    curve: Curves.fastOutSlowIn,
-  );
-
-  late final _valueAnimController = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 150),
-    value: 1.0,
-  );
-
-  late final CurvedAnimation _valueAnimation = CurvedAnimation(
-    parent: _valueAnimController,
-    curve: Curves.fastOutSlowIn,
-  );
+  AnimationController? _valueAnimController;
+  CurvedAnimation? _valueAnimation;
 
   late final _closeOverlay = OverlayEntry(
     builder: (context) => GestureDetector(
@@ -59,23 +44,39 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
 
   OverlayEntry? _menuEntry;
 
-  int currentIndex = 0;
+  late int currentIndex = widget.items.indexWhere((element) => element.value == widget.value);
 
   @override
   void initState() {
     super.initState();
 
-    currentIndex = widget.items.indexWhere((element) => element.value == widget.value);
+    _menuAnimController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 250),
+    );
 
-    if (mounted && currentIndex != 0) {
-      setState(() {});
-    }
+    _menuAnimation = CurvedAnimation(
+      parent: _menuAnimController!,
+      curve: Curves.fastOutSlowIn,
+    );
+
+    _valueAnimController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 150),
+      value: 1.0,
+    );
+
+    _valueAnimation = CurvedAnimation(
+      parent: _valueAnimController!,
+      curve: Curves.fastOutSlowIn,
+    );
   }
 
   @override
   void dispose() {
     super.dispose();
-    _menuAnimController.dispose();
+    _menuAnimController!.dispose();
+    _valueAnimController!.dispose();
   }
 
   void _openMenu() {
@@ -87,11 +88,11 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
       above: _closeOverlay,
     );
 
-    _menuAnimController.forward();
+    _menuAnimController!.forward();
   }
 
   void _closeMenu() {
-    _menuAnimController.reverse().then((_) {
+    _menuAnimController!.reverse().then((_) {
       _closeOverlay.remove();
       _menuEntry!.remove();
       _menuEntry = null;
@@ -112,7 +113,7 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
         },
         child: widget.items.isNotEmpty
             ? SlideTransition(
-                position: _valueAnimation.drive(Tween(
+                position: _valueAnimation!.drive(Tween(
                   begin: const Offset(.0, 2.0),
                   end: const Offset(.0, .0),
                 )),
@@ -120,7 +121,7 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
                   child: widget.items[currentIndex].child,
                 ),
               )
-            : const SizedBox(),
+            : const SizedBox.shrink(),
       ),
     );
   }
@@ -131,18 +132,18 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
 
     return OverlayEntry(
       builder: (context) {
-        const itemHeight = 36.0;
+        const itemHeight = kMinInteractiveDimension;
         const menuOffsetY = 4.0;
 
         final desiredHeight = widget.items.length * itemHeight;
-        final maxHeight = renderBox.constraints.maxHeight -
+        final maxAvailableHeight = MediaQuery.of(context).size.height -
             renderBox.localToGlobal(Offset.zero).dy -
             size.height -
             menuOffsetY;
 
         return Positioned(
           width: size.width,
-          height: math.min(desiredHeight, maxHeight),
+          height: math.min(widget.maxMenuHeight ?? desiredHeight, maxAvailableHeight),
           child: CompositedTransformFollower(
             link: _layerLink,
             showWhenUnlinked: false,
@@ -150,16 +151,17 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
             offset: const Offset(.0, menuOffsetY),
             child: widget.items.isNotEmpty
                 ? ScaleTransition(
-                    scale: _menuAnimation,
+                    scale: _menuAnimation!,
                     child: Material(
                       borderRadius: BorderRadius.circular(16.0),
                       color: widget.backgroundColor ?? Theme.of(context).colorScheme.background,
                       elevation: widget.elevation,
                       textStyle: widget.textStyle ??
-                          TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
+                          Theme.of(context).textTheme.titleMedium!.copyWith(
+                                color: Theme.of(context).colorScheme.onBackground,
+                              ),
                       child: ListView.builder(
+                        primary: true,
                         itemBuilder: (context, index) {
                           final element = widget.items.elementAt(index);
 
@@ -181,18 +183,12 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
 
                               _closeMenu();
 
-                              _valueAnimController.reset();
-                              _valueAnimController.forward().then((_) {
-                                widget.onChanged(widget.items.elementAt(currentIndex).value);
+                              _valueAnimController!.reset();
+                              _valueAnimController!.forward().then((_) {
+                                widget.onChanged(widget.items.elementAt(index).value);
                               });
                             },
-                            child: SizedBox.fromSize(
-                              size: const Size.fromHeight(itemHeight),
-                              child: Align(
-                                alignment: widget.alignment,
-                                child: element.child,
-                              ),
-                            ),
+                            child: element,
                           );
                         },
                         itemCount: widget.items.length,
@@ -207,12 +203,26 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton>
   }
 }
 
-class DropdownButtonItem<T> {
-  DropdownButtonItem({
-    this.value,
+class DropdownButtonItem<T> extends StatelessWidget {
+  const DropdownButtonItem({
+    Key? key,
+    this.alignment = Alignment.center,
+    required this.value,
     required this.child,
-  });
+  }) : super(key: key);
 
-  final T? value;
+  final Alignment alignment;
+  final T value;
   final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.fromSize(
+      size: const Size.fromHeight(kMinInteractiveDimension),
+      child: Align(
+        alignment: alignment,
+        child: child,
+      ),
+    );
+  }
 }
