@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 class DropdownOutlinedButton<T> extends StatefulWidget {
@@ -28,15 +29,12 @@ class DropdownOutlinedButton<T> extends StatefulWidget {
   State<DropdownOutlinedButton> createState() => _DropdownOutlinedButtonState<T>();
 }
 
-class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>>
-    with TickerProviderStateMixin {
+class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>> {
   final LayerLink _layerLink = LayerLink();
 
-  AnimationController? _menuAnimController;
-  CurvedAnimation? _menuAnimation;
-
-  AnimationController? _valueAnimController;
-  CurvedAnimation? _valueAnimation;
+  late AnimationController _menuSlideInController;
+  late AnimationController _menuFadeInController;
+  late AnimationController _valueFadeInController;
 
   late final _closeOverlay = OverlayEntry(
     builder: (context) => GestureDetector(
@@ -48,39 +46,6 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>>
 
   late int currentIndex = widget.items.indexWhere((element) => element.value == widget.value);
 
-  @override
-  void initState() {
-    super.initState();
-
-    _menuAnimController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 250),
-    );
-
-    _menuAnimation = CurvedAnimation(
-      parent: _menuAnimController!,
-      curve: Curves.fastOutSlowIn,
-    );
-
-    _valueAnimController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 150),
-      value: 1.0,
-    );
-
-    _valueAnimation = CurvedAnimation(
-      parent: _valueAnimController!,
-      curve: Curves.fastOutSlowIn,
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _menuAnimController!.dispose();
-    _valueAnimController!.dispose();
-  }
-
   void _openMenu() {
     _menuEntry = _buildMenu(context);
 
@@ -89,12 +54,11 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>>
       _menuEntry!,
       above: _closeOverlay,
     );
-
-    _menuAnimController!.forward();
   }
 
   void _closeMenu() {
-    _menuAnimController!.reverse().then((_) {
+    _menuFadeInController.reverse();
+    _menuSlideInController.reverse().then((_) {
       _closeOverlay.remove();
       _menuEntry!.remove();
       _menuEntry = null;
@@ -115,11 +79,10 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>>
           }
         },
         child: widget.items.isNotEmpty
-            ? SlideTransition(
-                position: _valueAnimation!.drive(Tween(
-                  begin: const Offset(.0, 2.0),
-                  end: const Offset(.0, .0),
-                )),
+            ? FadeIn(
+                controller: (controller) => _valueFadeInController = controller,
+                manualTrigger: true,
+                duration: const Duration(milliseconds: 250),
                 child: FittedBox(
                   child: widget.items[currentIndex].child,
                 ),
@@ -153,53 +116,66 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>>
             targetAnchor: Alignment.bottomLeft,
             offset: const Offset(.0, menuOffsetY),
             child: widget.items.isNotEmpty
-                ? ScaleTransition(
-                    scale: _menuAnimation!,
-                    child: Material(
-                      borderRadius: BorderRadius.circular(16.0),
-                      color: widget.backgroundColor ?? Theme.of(context).colorScheme.secondary,
-                      elevation: widget.elevation,
-                      textStyle: widget.textStyle ??
-                          Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Theme.of(context).colorScheme.onSecondary,
+                ? FadeIn(
+                    controller: (controller) => _menuFadeInController = controller,
+                    manualTrigger: true,
+                    duration: const Duration(milliseconds: 250),
+                    child: SlideInDown(
+                      controller: (controller) => _menuSlideInController = controller,
+                      manualTrigger: true,
+                      duration: const Duration(milliseconds: 250),
+                      from: 10.0,
+                      child: Material(
+                        borderRadius: BorderRadius.circular(16.0),
+                        color: widget.backgroundColor ?? Theme.of(context).colorScheme.secondary,
+                        elevation: widget.elevation,
+                        textStyle: widget.textStyle ??
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context).colorScheme.onSecondary,
+                                ),
+                        child: ListView.builder(
+                          primary: true,
+                          itemBuilder: (context, index) {
+                            final element = widget.items.elementAt(index);
+
+                            return InkWell(
+                              borderRadius: BorderRadius.only(
+                                topLeft: index == 0 ? const Radius.circular(16.0) : Radius.zero,
+                                topRight: index == 0 ? const Radius.circular(16.0) : Radius.zero,
+                                bottomLeft: index == widget.items.length - 1
+                                    ? const Radius.circular(16.0)
+                                    : Radius.zero,
+                                bottomRight: index == widget.items.length - 1
+                                    ? const Radius.circular(16.0)
+                                    : Radius.zero,
                               ),
-                      child: ListView.builder(
-                        primary: true,
-                        itemBuilder: (context, index) {
-                          final element = widget.items.elementAt(index);
+                              hoverColor:
+                                  Theme.of(context).colorScheme.secondaryContainer.withOpacity(.2),
+                              splashColor:
+                                  Theme.of(context).colorScheme.secondaryContainer.withOpacity(.1),
+                              highlightColor: Colors.transparent,
+                              onTap: () {
+                                if (currentIndex == index) {
+                                  _closeMenu();
+                                  return;
+                                }
 
-                          return InkWell(
-                            borderRadius: BorderRadius.only(
-                              topLeft: index == 0 ? const Radius.circular(16.0) : Radius.zero,
-                              topRight: index == 0 ? const Radius.circular(16.0) : Radius.zero,
-                              bottomLeft: index == widget.items.length - 1
-                                  ? const Radius.circular(16.0)
-                                  : Radius.zero,
-                              bottomRight: index == widget.items.length - 1
-                                  ? const Radius.circular(16.0)
-                                  : Radius.zero,
-                            ),
-                            hoverColor:
-                                Theme.of(context).colorScheme.secondaryContainer.withOpacity(.2),
-                            splashColor:
-                                Theme.of(context).colorScheme.secondaryContainer.withOpacity(.1),
-                            highlightColor: Colors.transparent,
-                            onTap: () {
-                              setState(() {
-                                currentIndex = index;
-                              });
+                                setState(() {
+                                  currentIndex = index;
+                                });
 
-                              _closeMenu();
+                                _valueFadeInController.forward().then((_) {
+                                  widget.onChanged(widget.items.elementAt(index).value);
+                                  _valueFadeInController.reset();
+                                });
 
-                              _valueAnimController!.reset();
-                              _valueAnimController!.forward().then((_) {
-                                widget.onChanged(widget.items.elementAt(index).value);
-                              });
-                            },
-                            child: element,
-                          );
-                        },
-                        itemCount: widget.items.length,
+                                _closeMenu();
+                              },
+                              child: element,
+                            );
+                          },
+                          itemCount: widget.items.length,
+                        ),
                       ),
                     ),
                   )
