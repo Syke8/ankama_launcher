@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:animate_do/animate_do.dart';
+import 'package:ankama_launcher/views/widgets/animations/animated_pop_in.dart';
+import 'package:ankama_launcher/views/widgets/animations/animated_top_slide_in.dart';
 import 'package:flutter/material.dart';
 
 class DropdownOutlinedButton<T> extends StatefulWidget {
@@ -29,12 +30,11 @@ class DropdownOutlinedButton<T> extends StatefulWidget {
   State<DropdownOutlinedButton> createState() => _DropdownOutlinedButtonState<T>();
 }
 
-class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>> {
+class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>>
+    with SingleTickerProviderStateMixin {
   final LayerLink _layerLink = LayerLink();
 
-  late AnimationController _menuSlideInController;
-  late AnimationController _menuFadeInController;
-  late AnimationController _valueFadeInController;
+  AnimationController? _menuAnimController;
 
   late final _closeOverlay = OverlayEntry(
     builder: (context) => GestureDetector(
@@ -46,6 +46,19 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>> {
 
   late int currentIndex = widget.items.indexWhere((element) => element.value == widget.value);
 
+  @override
+  void initState() {
+    super.initState();
+
+    _menuAnimController = TopSlideIn.defaultController(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _menuAnimController!.dispose();
+  }
+
   void _openMenu() {
     _menuEntry = _buildMenu(context);
 
@@ -54,11 +67,11 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>> {
       _menuEntry!,
       above: _closeOverlay,
     );
+    _menuAnimController!.forward();
   }
 
   void _closeMenu() {
-    _menuFadeInController.reverse();
-    _menuSlideInController.reverse().then((_) {
+    _menuAnimController!.reverse().then((_) {
       _closeOverlay.remove();
       _menuEntry!.remove();
       _menuEntry = null;
@@ -79,13 +92,9 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>> {
           }
         },
         child: widget.items.isNotEmpty
-            ? FadeIn(
-                controller: (controller) => _valueFadeInController = controller,
-                manualTrigger: true,
-                duration: const Duration(milliseconds: 250),
-                child: FittedBox(
-                  child: widget.items[currentIndex].child,
-                ),
+            ? FittedBox(
+                key: ValueKey(widget.items[currentIndex].value),
+                child: AnimatedPopIn(child: widget.items[currentIndex].child),
               )
             : const SizedBox.shrink(),
       ),
@@ -116,66 +125,51 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>> {
             targetAnchor: Alignment.bottomLeft,
             offset: const Offset(.0, menuOffsetY),
             child: widget.items.isNotEmpty
-                ? FadeIn(
-                    controller: (controller) => _menuFadeInController = controller,
-                    manualTrigger: true,
-                    duration: const Duration(milliseconds: 250),
-                    child: SlideInDown(
-                      controller: (controller) => _menuSlideInController = controller,
-                      manualTrigger: true,
-                      duration: const Duration(milliseconds: 250),
-                      from: 10.0,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(16.0),
-                        color: widget.backgroundColor ?? Theme.of(context).colorScheme.secondary,
-                        elevation: widget.elevation,
-                        textStyle: widget.textStyle ??
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: Theme.of(context).colorScheme.onSecondary,
-                                ),
-                        child: ListView.builder(
-                          primary: true,
-                          itemBuilder: (context, index) {
-                            final element = widget.items.elementAt(index);
-
-                            return InkWell(
-                              borderRadius: BorderRadius.only(
-                                topLeft: index == 0 ? const Radius.circular(16.0) : Radius.zero,
-                                topRight: index == 0 ? const Radius.circular(16.0) : Radius.zero,
-                                bottomLeft: index == widget.items.length - 1
-                                    ? const Radius.circular(16.0)
-                                    : Radius.zero,
-                                bottomRight: index == widget.items.length - 1
-                                    ? const Radius.circular(16.0)
-                                    : Radius.zero,
+                ? TopSlideIn(
+                    controller: _menuAnimController!,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(16.0),
+                      color: widget.backgroundColor ?? Theme.of(context).colorScheme.secondary,
+                      elevation: widget.elevation,
+                      textStyle: widget.textStyle ??
+                          Theme.of(context).textTheme.titleMedium!.copyWith(
+                                color: Theme.of(context).colorScheme.onSecondary,
                               ),
-                              hoverColor:
-                                  Theme.of(context).colorScheme.secondaryContainer.withOpacity(.2),
-                              splashColor:
-                                  Theme.of(context).colorScheme.secondaryContainer.withOpacity(.1),
-                              highlightColor: Colors.transparent,
-                              onTap: () {
-                                if (currentIndex == index) {
-                                  _closeMenu();
-                                  return;
-                                }
+                      child: ListView.builder(
+                        primary: true,
+                        itemBuilder: (context, index) {
+                          final element = widget.items.elementAt(index);
+
+                          return InkWell(
+                            borderRadius: BorderRadius.only(
+                              topLeft: index == 0 ? const Radius.circular(16.0) : Radius.zero,
+                              topRight: index == 0 ? const Radius.circular(16.0) : Radius.zero,
+                              bottomLeft: index == widget.items.length - 1
+                                  ? const Radius.circular(16.0)
+                                  : Radius.zero,
+                              bottomRight: index == widget.items.length - 1
+                                  ? const Radius.circular(16.0)
+                                  : Radius.zero,
+                            ),
+                            hoverColor:
+                                Theme.of(context).colorScheme.secondaryContainer.withOpacity(.2),
+                            splashColor:
+                                Theme.of(context).colorScheme.secondaryContainer.withOpacity(.1),
+                            highlightColor: Colors.transparent,
+                            onTap: () {
+                              if (currentIndex != index) {
+                                widget.onChanged(element.value);
 
                                 setState(() {
                                   currentIndex = index;
                                 });
-
-                                _valueFadeInController.forward().then((_) {
-                                  widget.onChanged(widget.items.elementAt(index).value);
-                                  _valueFadeInController.reset();
-                                });
-
-                                _closeMenu();
-                              },
-                              child: element,
-                            );
-                          },
-                          itemCount: widget.items.length,
-                        ),
+                              }
+                              _closeMenu();
+                            },
+                            child: element,
+                          );
+                        },
+                        itemCount: widget.items.length,
                       ),
                     ),
                   )
@@ -205,7 +199,9 @@ class DropdownButtonItem<T> extends StatelessWidget {
       size: const Size.fromHeight(kMinInteractiveDimension),
       child: Align(
         alignment: alignment,
-        child: FittedBox(child: child),
+        child: FittedBox(
+          child: child,
+        ),
       ),
     );
   }

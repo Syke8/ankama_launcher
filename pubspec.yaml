@@ -41,7 +41,6 @@ dependencies:
   flutter_riverpod: ^1.0.3
   community_material_icon: ^5.9.55
   animations: ^2.0.2
-  animate_do: ^2.1.0
 
 dev_dependencies:
   flutter_test:
