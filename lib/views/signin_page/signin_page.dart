@@ -1,4 +1,5 @@
 import 'package:ankama_launcher/assets.dart';
+import 'package:ankama_launcher/localization.dart';
 import 'package:ankama_launcher/style.dart';
 import 'package:ankama_launcher/views/signin_page/widgets/facebook_signin_button.dart';
 import 'package:ankama_launcher/views/signin_page/widgets/forgotten_password_text.dart';
@@ -7,7 +8,6 @@ import 'package:ankama_launcher/views/signin_page/widgets/password_text_field.da
 import 'package:ankama_launcher/views/widgets/title_bar.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const kMenuBackgroundWidth = 500.0;
 const kMenuPadding = 50.0;
@@ -61,7 +61,7 @@ class SignInPage extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          AppLocalizations.of(context)!.connection.toUpperCase(),
+                          context.l10n.connection.toUpperCase(),
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ),
@@ -70,7 +70,7 @@ class SignInPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)!.identifier,
+                          hintText: context.l10n.identifier,
                           suffixIcon: const Icon(
                             Icons.help_outline_rounded,
                           ),
@@ -92,12 +92,12 @@ class SignInPage extends StatelessWidget {
                       child: Row(
                         children: [
                           LabeledCheckbox(
-                            label: AppLocalizations.of(context)!.rememberMe,
+                            label: context.l10n.rememberMe,
                             onChecked: () {},
                             onUnchecked: () {},
                           ),
                           LabeledCheckbox(
-                            label: AppLocalizations.of(context)!.stayLoggedIn,
+                            label: context.l10n.stayLoggedIn,
                             onChecked: () {},
                             onUnchecked: () {},
                           ),
@@ -110,7 +110,7 @@ class SignInPage extends StatelessWidget {
                         size: const Size.fromHeight(AppStyle.primaryButtonHeight),
                         child: ElevatedButton(
                           onPressed: () {},
-                          child: Text(AppLocalizations.of(context)!.signIn.toUpperCase()),
+                          child: Text(context.l10n.signIn.toUpperCase()),
                         ),
                       ),
                     ),
@@ -126,7 +126,7 @@ class SignInPage extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                          Text(AppLocalizations.of(context)!.or.toUpperCase()),
+                          Text(context.l10n.or.toUpperCase()),
                           const Expanded(
                             child: Divider(
                               thickness: 2.0,
@@ -156,12 +156,12 @@ class SignInPage extends StatelessWidget {
                             TextButton.icon(
                               onPressed: () {},
                               icon: const Icon(CommunityMaterialIcons.arrow_right_circle_outline),
-                              label: Text(AppLocalizations.of(context)!.signInConnectionProblem),
+                              label: Text(context.l10n.signInConnectionProblem),
                             ),
                             TextButton.icon(
                               onPressed: () {},
                               icon: const Icon(CommunityMaterialIcons.arrow_right_circle_outline),
-                              label: Text(AppLocalizations.of(context)!.signIncreateAnkamaAccount),
+                              label: Text(context.l10n.signIncreateAnkamaAccount),
                             ),
                           ],
                         ),

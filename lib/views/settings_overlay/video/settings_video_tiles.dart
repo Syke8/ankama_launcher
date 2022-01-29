@@ -3,17 +3,17 @@ import 'package:ankama_launcher/views/settings_overlay/widgets/setting_button_tr
 import 'package:ankama_launcher/views/settings_overlay/widgets/setting_switch_trailing.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ankama_launcher/localization.dart';
 
 class AutoPlaySettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsVideoStreamAutoPlay);
+    return Text(context.l10n.settingsVideoStreamAutoPlay);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsVideoStreamAutoPlayDesc);
+    return Text(context.l10n.settingsVideoStreamAutoPlayDesc);
   }
 
   @override
@@ -25,7 +25,7 @@ class AutoPlaySettingTile implements SettingTile {
 class StreamNotificationSettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsVideoStreamStreamNotification);
+    return Text(context.l10n.settingsVideoStreamStreamNotification);
   }
 
   @override
@@ -42,19 +42,19 @@ class StreamNotificationSettingTile implements SettingTile {
 class TwitchConnectionSettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsVideoStreamTwitchConnection);
+    return Text(context.l10n.settingsVideoStreamTwitchConnection);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsVideoStreamTwitchConnectionDesc);
+    return Text(context.l10n.settingsVideoStreamTwitchConnectionDesc);
   }
 
   @override
   Widget buildTrailing(BuildContext context) {
     return SettingButtonIconTrailing(
       onPressed: () {},
-      label: AppLocalizations.of(context)!.settingsVideoStreamTwitchConnectionButton,
+      label: context.l10n.settingsVideoStreamTwitchConnectionButton,
       iconData: CommunityMaterialIcons.twitch,
     );
   }

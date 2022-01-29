@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ankama_launcher/localization.dart';
 
 class FacebookSignInButton extends StatelessWidget {
   const FacebookSignInButton({
@@ -18,7 +18,7 @@ class FacebookSignInButton extends StatelessWidget {
       ),
       onPressed: onPressed,
       icon: const Icon(Icons.facebook_rounded),
-      label: Text(AppLocalizations.of(context)!.signInFacebook.toUpperCase()),
+      label: Text(context.l10n.signInFacebook.toUpperCase()),
     );
   }
 }

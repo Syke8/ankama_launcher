@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ankama_launcher/localization.dart';
 
 class PasswordTextField extends StatefulWidget {
   const PasswordTextField({
@@ -17,7 +17,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-        hintText: AppLocalizations.of(context)!.password,
+        hintText: context.l10n.password,
         suffixIcon: IconButton(
           icon: Icon(
             obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,

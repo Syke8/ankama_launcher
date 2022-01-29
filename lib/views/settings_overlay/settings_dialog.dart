@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:ankama_launcher/localization.dart';
 import 'package:ankama_launcher/views/settings_overlay/chat/settings_chat_view.dart';
 import 'package:ankama_launcher/views/settings_overlay/general/settings_general_view.dart';
 import 'package:ankama_launcher/views/settings_overlay/help/settings_help_view.dart';
@@ -9,7 +10,6 @@ import 'package:ankama_launcher/views/settings_overlay/widgets/close_settings_bu
 import 'package:ankama_launcher/views/widgets/title_bar.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsDialog extends StatefulWidget {
   const SettingsDialog({
@@ -113,12 +113,12 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                         CommunityMaterialIcons.tune_variant,
                       ),
                       title: Text(
-                        AppLocalizations.of(context)!.settings.toUpperCase(),
+                        context.l10n.settings.toUpperCase(),
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                     _SettingsMenuListTile(
-                      label: AppLocalizations.of(context)!.settingsGeneral,
+                      label: context.l10n.settingsGeneral,
                       selected: actualView == _SettingsView.general,
                       onTap: () {
                         if (actualView != _SettingsView.general) {
@@ -127,7 +127,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                       },
                     ),
                     _SettingsMenuListTile(
-                      label: AppLocalizations.of(context)!.settingsPerformance,
+                      label: context.l10n.settingsPerformance,
                       selected: actualView == _SettingsView.performance,
                       onTap: () {
                         if (actualView != _SettingsView.performance) {
@@ -136,7 +136,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                       },
                     ),
                     _SettingsMenuListTile(
-                      label: AppLocalizations.of(context)!.settingsChat,
+                      label: context.l10n.settingsChat,
                       selected: actualView == _SettingsView.chat,
                       onTap: () {
                         if (actualView != _SettingsView.chat) {
@@ -145,7 +145,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                       },
                     ),
                     _SettingsMenuListTile(
-                      label: AppLocalizations.of(context)!.settingsVideoStream,
+                      label: context.l10n.settingsVideoStream,
                       selected: actualView == _SettingsView.video,
                       onTap: () {
                         if (actualView != _SettingsView.video) {
@@ -154,7 +154,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                       },
                     ),
                     _SettingsMenuListTile(
-                      label: AppLocalizations.of(context)!.settingsLegal,
+                      label: context.l10n.settingsLegal,
                       selected: actualView == _SettingsView.legal,
                       onTap: () {
                         if (actualView != _SettingsView.legal) {
@@ -163,7 +163,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                       },
                     ),
                     _SettingsMenuListTile(
-                      label: AppLocalizations.of(context)!.settingsHelp,
+                      label: context.l10n.settingsHelp,
                       selected: actualView == _SettingsView.help,
                       onTap: () {
                         if (actualView != _SettingsView.help) {

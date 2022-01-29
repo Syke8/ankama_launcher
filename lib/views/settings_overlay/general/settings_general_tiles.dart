@@ -4,27 +4,27 @@ import 'package:ankama_launcher/views/settings_overlay/setting_tile.dart';
 import 'package:ankama_launcher/views/settings_overlay/widgets/setting_dropdown_trailing.dart';
 import 'package:ankama_launcher/views/settings_overlay/widgets/setting_switch_trailing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ankama_launcher/localization.dart';
 
 class LanguageSettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralLanguage);
+    return Text(context.l10n.settingsGeneralLanguage);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralLanguageDesc);
+    return Text(context.l10n.settingsGeneralLanguageDesc);
   }
 
   @override
   Widget buildTrailing(BuildContext context) {
     return SettingDropdownTrailing(
       options: HashSet.from([
-        AppLocalizations.of(context)!.settingsGeneralLanguageEnglish,
-        AppLocalizations.of(context)!.settingsGeneralLanguageSpanish,
-        AppLocalizations.of(context)!.settingsGeneralLanguageFrench,
-        AppLocalizations.of(context)!.settingsGeneralLanguagePortuguese,
+        context.l10n.settingsGeneralLanguageEnglish,
+        context.l10n.settingsGeneralLanguageSpanish,
+        context.l10n.settingsGeneralLanguageFrench,
+        context.l10n.settingsGeneralLanguagePortuguese,
       ]),
     );
   }
@@ -33,21 +33,21 @@ class LanguageSettingTile implements SettingTile {
 class InterfaceSizeSettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralUISize);
+    return Text(context.l10n.settingsGeneralUISize);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralUISizeDesc);
+    return Text(context.l10n.settingsGeneralUISizeDesc);
   }
 
   @override
   Widget buildTrailing(BuildContext context) {
     return SettingDropdownTrailing(
       options: HashSet.from([
-        AppLocalizations.of(context)!.settingsGeneralUISizeSD,
-        AppLocalizations.of(context)!.settingsGeneralUISizeHD,
-        AppLocalizations.of(context)!.settingsGeneralUISize4K,
+        context.l10n.settingsGeneralUISizeSD,
+        context.l10n.settingsGeneralUISizeHD,
+        context.l10n.settingsGeneralUISize4K,
       ]),
     );
   }
@@ -56,20 +56,20 @@ class InterfaceSizeSettingTile implements SettingTile {
 class ThemeModeSettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralTheme);
+    return Text(context.l10n.settingsGeneralTheme);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralThemeDesc);
+    return Text(context.l10n.settingsGeneralThemeDesc);
   }
 
   @override
   Widget buildTrailing(BuildContext context) {
     return SettingDropdownTrailing(
       options: HashSet.from([
-        AppLocalizations.of(context)!.settingsGeneralThemeLight,
-        AppLocalizations.of(context)!.settingsGeneralThemeDark,
+        context.l10n.settingsGeneralThemeLight,
+        context.l10n.settingsGeneralThemeDark,
       ]),
     );
   }
@@ -78,12 +78,12 @@ class ThemeModeSettingTile implements SettingTile {
 class StartupSettingTile extends SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralStartupLaunch);
+    return Text(context.l10n.settingsGeneralStartupLaunch);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralStartupLaunchDesc);
+    return Text(context.l10n.settingsGeneralStartupLaunchDesc);
   }
 
   @override
@@ -95,12 +95,12 @@ class StartupSettingTile extends SettingTile {
 class ReduceInsteadCloseSettingTile extends SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralReduceInsteadClose);
+    return Text(context.l10n.settingsGeneralReduceInsteadClose);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralReduceInsteadCloseDesc);
+    return Text(context.l10n.settingsGeneralReduceInsteadCloseDesc);
   }
 
   @override
@@ -112,12 +112,12 @@ class ReduceInsteadCloseSettingTile extends SettingTile {
 class ReduceInsteadMinimizeSettingTile extends SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralReduceInsteadMinimize);
+    return Text(context.l10n.settingsGeneralReduceInsteadMinimize);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsGeneralReduceInsteadMinimizeDesc);
+    return Text(context.l10n.settingsGeneralReduceInsteadMinimizeDesc);
   }
 
   @override

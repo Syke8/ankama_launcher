@@ -4,26 +4,26 @@ import 'package:ankama_launcher/views/settings_overlay/setting_tile.dart';
 import 'package:ankama_launcher/views/settings_overlay/widgets/setting_dropdown_trailing.dart';
 import 'package:ankama_launcher/views/settings_overlay/widgets/setting_switch_trailing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ankama_launcher/localization.dart';
 
 class GeneralPerformanceSettingTile extends SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceGeneral);
+    return Text(context.l10n.settingsPerformanceGeneral);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceGeneralDesc);
+    return Text(context.l10n.settingsPerformanceGeneralDesc);
   }
 
   @override
   Widget? buildTrailing(BuildContext context) {
     return SettingDropdownTrailing(
       options: HashSet.from([
-        AppLocalizations.of(context)!.settingsPerformanceGeneralHigh,
-        AppLocalizations.of(context)!.settingsPerformanceGeneralMedium,
-        AppLocalizations.of(context)!.settingsPerformanceGeneralLow,
+        context.l10n.settingsPerformanceGeneralHigh,
+        context.l10n.settingsPerformanceGeneralMedium,
+        context.l10n.settingsPerformanceGeneralLow,
       ]),
     );
   }
@@ -32,21 +32,21 @@ class GeneralPerformanceSettingTile extends SettingTile {
 class ImageQualitySettingTile extends SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceImageQuality);
+    return Text(context.l10n.settingsPerformanceImageQuality);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceImageQualityDesc);
+    return Text(context.l10n.settingsPerformanceImageQualityDesc);
   }
 
   @override
   Widget? buildTrailing(BuildContext context) {
     return SettingDropdownTrailing(
       options: HashSet.from([
-        AppLocalizations.of(context)!.settingsPerformanceImageQualityHigh,
-        AppLocalizations.of(context)!.settingsPerformanceImageQualityMedium,
-        AppLocalizations.of(context)!.settingsPerformanceImageQualityLow,
+        context.l10n.settingsPerformanceImageQualityHigh,
+        context.l10n.settingsPerformanceImageQualityMedium,
+        context.l10n.settingsPerformanceImageQualityLow,
       ]),
     );
   }
@@ -55,12 +55,12 @@ class ImageQualitySettingTile extends SettingTile {
 class DownloadBandwidthSettingTile extends SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceDownloadBandwidth);
+    return Text(context.l10n.settingsPerformanceDownloadBandwidth);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceDownloadBandwidthDesc);
+    return Text(context.l10n.settingsPerformanceDownloadBandwidthDesc);
   }
 
   @override
@@ -72,12 +72,12 @@ class DownloadBandwidthSettingTile extends SettingTile {
 class UIAnimationsSettingTile extends SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceUIAnimations);
+    return Text(context.l10n.settingsPerformanceUIAnimations);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceUIAnimationsDesc);
+    return Text(context.l10n.settingsPerformanceUIAnimationsDesc);
   }
 
   @override
@@ -89,12 +89,12 @@ class UIAnimationsSettingTile extends SettingTile {
 class VideoCarouselSettingTile extends SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceVideoCarousel);
+    return Text(context.l10n.settingsPerformanceVideoCarousel);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceVideoCarouselDesc);
+    return Text(context.l10n.settingsPerformanceVideoCarouselDesc);
   }
 
   @override
@@ -106,12 +106,12 @@ class VideoCarouselSettingTile extends SettingTile {
 class KeepLauncherOpenedSettingTile extends SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceKeepLauncherOpened);
+    return Text(context.l10n.settingsPerformanceKeepLauncherOpened);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsPerformanceKeepLauncherOpenedDesc);
+    return Text(context.l10n.settingsPerformanceKeepLauncherOpenedDesc);
   }
 
   @override

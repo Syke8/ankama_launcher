@@ -1,17 +1,17 @@
 import 'package:ankama_launcher/views/settings_overlay/setting_tile.dart';
 import 'package:ankama_launcher/views/settings_overlay/widgets/setting_switch_trailing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ankama_launcher/localization.dart';
 
 class DenyFriendSettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsChatDenyFriend);
+    return Text(context.l10n.settingsChatDenyFriend);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsChatDenyFriendDesc);
+    return Text(context.l10n.settingsChatDenyFriendDesc);
   }
 
   @override
@@ -23,12 +23,12 @@ class DenyFriendSettingTile implements SettingTile {
 class EnableNotificationsSettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsChatEnableAllNotifications);
+    return Text(context.l10n.settingsChatEnableAllNotifications);
   }
 
   @override
   Widget buildDescription(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsChatEnableAllNotificationsDesc);
+    return Text(context.l10n.settingsChatEnableAllNotificationsDesc);
   }
 
   @override
@@ -40,7 +40,7 @@ class EnableNotificationsSettingTile implements SettingTile {
 class EnableMessageNotificationsSettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsChatEnableMessageReceiveNotification);
+    return Text(context.l10n.settingsChatEnableMessageReceiveNotification);
   }
 
   @override
@@ -57,7 +57,7 @@ class EnableMessageNotificationsSettingTile implements SettingTile {
 class EnableFriendRequestNotificationsSettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsChatEnableFriendRequestNotification);
+    return Text(context.l10n.settingsChatEnableFriendRequestNotification);
   }
 
   @override
@@ -74,7 +74,7 @@ class EnableFriendRequestNotificationsSettingTile implements SettingTile {
 class EnableFriendConnectionNotificationsSettingTile implements SettingTile {
   @override
   Widget buildTitle(BuildContext context) {
-    return Text(AppLocalizations.of(context)!.settingsChatEnableFriendConnectionNotification);
+    return Text(context.l10n.settingsChatEnableFriendConnectionNotification);
   }
 
   @override
