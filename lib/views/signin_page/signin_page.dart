@@ -1,4 +1,5 @@
 import 'package:ankama_launcher/assets.dart';
+import 'package:ankama_launcher/style.dart';
 import 'package:ankama_launcher/views/signin_page/widgets/facebook_signin_button.dart';
 import 'package:ankama_launcher/views/signin_page/widgets/forgotten_password_text.dart';
 import 'package:ankama_launcher/views/widgets/labeled_checkbox.dart';
@@ -105,9 +106,12 @@ class SignInPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text(AppLocalizations.of(context)!.signIn.toUpperCase()),
+                      child: SizedBox.fromSize(
+                        size: const Size.fromHeight(AppStyle.primaryButtonHeight),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text(AppLocalizations.of(context)!.signIn.toUpperCase()),
+                        ),
                       ),
                     ),
                     Padding(
@@ -135,8 +139,11 @@ class SignInPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: FacebookSignInButton(
-                        onPressed: () {},
+                      child: SizedBox.fromSize(
+                        size: const Size.fromHeight(AppStyle.primaryButtonHeight),
+                        child: FacebookSignInButton(
+                          onPressed: () {},
+                        ),
                       ),
                     ),
                     Flexible(

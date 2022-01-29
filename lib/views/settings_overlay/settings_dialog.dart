@@ -180,7 +180,7 @@ class _SettingsMenuState extends State<_SettingsMenu> {
                 data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    color: Theme.of(context).colorScheme.secondaryContainer,
                   ),
                   constraints: const BoxConstraints.expand(),
                   padding: const EdgeInsets.all(40.0),
@@ -236,16 +236,16 @@ class _SettingsMenuListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return ListTile(
       title: Text(
         label.toUpperCase(),
       ),
       selected: selected,
-      selectedTileColor: color.withOpacity(0.1),
-      textColor: color,
-      hoverColor: color.withOpacity(0.1),
+      selectedTileColor: colorScheme.secondaryContainer,
+      textColor: colorScheme.secondary,
+      hoverColor: colorScheme.secondaryContainer,
       onTap: onTap,
     );
   }

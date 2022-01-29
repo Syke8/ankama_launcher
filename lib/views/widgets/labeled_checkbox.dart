@@ -28,9 +28,9 @@ class _LabeledCheckboxState extends State<LabeledCheckbox> {
       type: MaterialType.transparency,
       child: InkWell(
         customBorder: const StadiumBorder(),
-        splashColor: splashColor.withOpacity(.15),
+        splashColor: splashColor.withOpacity(.2),
         highlightColor: Colors.transparent,
-        hoverColor: splashColor.withOpacity(.05),
+        hoverColor: splashColor.withOpacity(.1),
         onTap: () => checkedState = !checked,
         child: Padding(
           padding: const EdgeInsets.only(right: 4.0),

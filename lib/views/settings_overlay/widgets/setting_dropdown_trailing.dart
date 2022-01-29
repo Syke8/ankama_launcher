@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:ankama_launcher/style.dart';
 import 'package:ankama_launcher/views/settings_overlay/setting_tile.dart';
 import 'package:ankama_launcher/views/widgets/dropdown_outlined_button.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,14 @@ class SettingDropdownTrailing extends StatefulWidget {
 class _SettingDropdownTrailingState extends State<SettingDropdownTrailing> {
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: kTrailingWidth),
+    return SizedBox(
+      width: kTrailingWidth,
+      height: AppStyle.secondaryButtonHeight,
       child: DropdownOutlinedButton<String>(
+        buttonStyle: OutlinedButtonTheme.of(context).style!.copyWith(
+              foregroundColor:
+                  MaterialStateProperty.all(Theme.of(context).colorScheme.onSecondaryContainer),
+            ),
         value: widget.options.first,
         items: widget.options
             .map((e) => DropdownButtonItem(

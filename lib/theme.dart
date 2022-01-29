@@ -54,14 +54,12 @@ class AppTheme {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
-            minimumSize: const Size.fromHeight(42.0),
             textStyle: const TextStyle(fontSize: 16.0),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             shape: const StadiumBorder(),
-            minimumSize: const Size.fromHeight(42.0),
             textStyle: const TextStyle(fontSize: 16.0),
           ),
         ),
@@ -73,14 +71,14 @@ class AppTheme {
         switchTheme: SwitchThemeData(
           thumbColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.selected)) {
-              return scheme.primary;
+              return scheme.secondary;
             }
 
             return null;
           }),
           trackColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.selected)) {
-              return scheme.primary.withOpacity(0.5);
+              return scheme.primary;
             }
 
             return null;

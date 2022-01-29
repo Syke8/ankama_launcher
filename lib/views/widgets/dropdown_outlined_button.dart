@@ -9,6 +9,7 @@ class DropdownOutlinedButton<T> extends StatefulWidget {
     this.elevation = 4.0,
     this.textStyle,
     this.maxMenuHeight,
+    this.buttonStyle,
     required this.value,
     required this.items,
     required this.onChanged,
@@ -18,6 +19,7 @@ class DropdownOutlinedButton<T> extends StatefulWidget {
   final double elevation;
   final TextStyle? textStyle;
   final double? maxMenuHeight;
+  final ButtonStyle? buttonStyle;
   final T value;
   final List<DropdownButtonItem<T>> items;
   final void Function(T value) onChanged;
@@ -104,6 +106,7 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>>
     return CompositedTransformTarget(
       link: _layerLink,
       child: OutlinedButton(
+        style: widget.buttonStyle,
         onPressed: () {
           if (_menuEntry != null) {
             return;
@@ -154,11 +157,11 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>>
                     scale: _menuAnimation!,
                     child: Material(
                       borderRadius: BorderRadius.circular(16.0),
-                      color: widget.backgroundColor ?? Theme.of(context).colorScheme.background,
+                      color: widget.backgroundColor ?? Theme.of(context).colorScheme.secondary,
                       elevation: widget.elevation,
                       textStyle: widget.textStyle ??
                           Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Theme.of(context).colorScheme.onBackground,
+                                color: Theme.of(context).colorScheme.onSecondary,
                               ),
                       child: ListView.builder(
                         primary: true,
@@ -176,6 +179,11 @@ class _DropdownOutlinedButtonState<T> extends State<DropdownOutlinedButton<T>>
                                   ? const Radius.circular(16.0)
                                   : Radius.zero,
                             ),
+                            hoverColor:
+                                Theme.of(context).colorScheme.secondaryContainer.withOpacity(.2),
+                            splashColor:
+                                Theme.of(context).colorScheme.secondaryContainer.withOpacity(.1),
+                            highlightColor: Colors.transparent,
                             onTap: () {
                               setState(() {
                                 currentIndex = index;
@@ -221,7 +229,7 @@ class DropdownButtonItem<T> extends StatelessWidget {
       size: const Size.fromHeight(kMinInteractiveDimension),
       child: Align(
         alignment: alignment,
-        child: child,
+        child: FittedBox(child: child),
       ),
     );
   }
